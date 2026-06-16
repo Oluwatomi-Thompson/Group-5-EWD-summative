@@ -1,0 +1,461 @@
+<!-- ==========================================
+     NYC URBAN MOBILITY DASHBOARD
+     HTML STRUCTURE
+========================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- CHARACTER ENCODING -->
+  <meta charset="UTF-8">
+
+  <!-- RESPONSIVE VIEWPORT -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PAGE TITLE -->
+  <title>ɴʏᴄ ᴜʀʙᴀɴ ᴍᴏʙɪʟɪᴛʏ ᴅᴀꜱʜʙᴏᴀʀᴅ</title>
+
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+  <!-- CHART.JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+  <!-- ==========================================
+       TOP NAVIGATION BAR
+  ========================================== -->
+  <header class="topbar">
+
+    <!-- LEFT LOGO AREA -->
+    <div class="logo-section">
+
+      <div class="logo-box">
+        <i class="fa-solid fa-taxi"></i>
+      </div>
+
+      <div>
+        <h1>ɴʏᴄ ᴜʀʙᴀɴ ᴍᴏʙɪʟɪᴛʏ ᴅᴀꜱʜʙᴏᴀʀᴅ</h1>
+        <p>ᴀɴᴀʟʏᴢɪɴɢ ɴᴇᴡ ʏᴏʀᴋ ᴄɪᴛʏ ᴛᴀxɪ ᴍᴏᴠᴇᴍᴇɴᴛ ᴘᴀᴛᴛᴇʀɴꜱ</p>
+      </div>
+
+    </div>
+
+    <!-- RIGHT ACTION BUTTONS -->
+    <div class="top-actions">
+
+      <!-- DARK MODE -->
+      <button id="themeToggle">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+
+      <!-- SCROLL TOP -->
+      <button id="scrollTopBtn">
+        <i class="fa-solid fa-arrow-up"></i>
+      </button>
+
+    </div>
+
+  </header>
+
+  <!-- ==========================================
+       MAIN DASHBOARD LAYOUT
+  ========================================== -->
+  <div class="dashboard-container">
+
+    <!-- ==========================================
+         SIDEBAR
+    ========================================== -->
+    <aside class="sidebar">
+
+      <h3>FILTERS</h3>
+
+      <!-- DATE RANGE -->
+      <div class="filter-group">
+
+        <label>Date Range</label>
+
+        <input type="date">
+        <input type="date">
+
+      </div>
+
+      <!-- BOROUGH -->
+      <div class="filter-group">
+
+        <label>Borough</label>
+
+        <select>
+          <option>All Boroughs</option>
+          <option>Manhattan</option>
+          <option>Brooklyn</option>
+          <option>Queens</option>
+          <option>Bronx</option>
+          <option>Staten Island</option>
+        </select>
+
+      </div>
+
+      <!-- TRIP DISTANCE -->
+      <div class="filter-group">
+
+        <label>Trip Distance (mi)</label>
+
+        <div class="range-box">
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
+
+      </div>
+
+      <!-- FARE -->
+      <div class="filter-group">
+
+        <label>Fare Amount ($)</label>
+
+        <div class="range-box">
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
+
+      </div>
+
+      <!-- PAYMENT -->
+      <div class="filter-group">
+
+        <label>Payment Type</label>
+
+        <select>
+          <option>All Payment Types</option>
+          <option>Credit Card</option>
+          <option>Cash</option>
+          <option>No Charge</option>
+          <option>Unknown</option>
+        </select>
+
+      </div>
+
+      <!-- PASSENGER -->
+      <div class="filter-group">
+
+        <label>Passenger Count</label>
+
+        <select>
+          <option>Any</option>
+          <option>1 Passenger</option>
+          <option>2 Passengers</option>
+          <option>3 Passengers</option>
+          <option>4 Passengers</option>
+          <option>5 Passengers</option>
+        </select>
+
+      </div>
+
+      <!-- FILTER BUTTONS -->
+      <div class="button-group">
+
+        <button class="primary-btn" id="applyBtn">
+          Apply Filters
+        </button>
+
+        <button class="secondary-btn" id="resetBtn">
+          Reset
+        </button>
+
+      </div>
+
+    </aside>
+
+    <!-- ==========================================
+         MAIN CONTENT
+    ========================================== -->
+    <main class="main-content">
+
+      <!-- ==========================================
+           TOP STATISTICS CARDS
+      ========================================== -->
+      <section class="stats-grid">
+
+        <div class="card stat-card">
+          <p>Total Trips</p>
+          <h2>480</h2>
+          <span class="positive">+4.2%</span>
+        </div>
+
+        <div class="card stat-card">
+          <p>Average Fare</p>
+          <h2>$38.46</h2>
+          <span class="positive">+1.9%</span>
+        </div>
+
+        <div class="card stat-card">
+          <p>Avg Trip Distance</p>
+          <h2>11.4 mi</h2>
+          <span class="negative">-0.8%</span>
+        </div>
+
+        <div class="card stat-card">
+          <p>Avg Trip Duration</p>
+          <h2>29 min</h2>
+          <span class="positive">+2.1%</span>
+        </div>
+
+        <div class="card stat-card">
+          <p>Peak Pickup Hour</p>
+          <h2>01:00</h2>
+          <span>Friday Evening</span>
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           LOWER ANALYTICS GRID
+      ========================================== -->
+      <section class="charts-grid">
+
+        <!-- PAYMENT CHART -->
+        <div class="card payment-card">
+
+          <div class="card-header">
+            <h3>Payment Method Distribution</h3>
+            <p>How riders are paying</p>
+          </div>
+
+          <div class="pie-container">
+            <canvas id="paymentChart"></canvas>
+          </div>
+
+        </div>
+
+        <!-- TOP PICKUP ZONES -->
+        <div class="card zone-card">
+
+          <div class="card-header">
+            <h3>Top Pickup Zones</h3>
+            <p>Highest-volume pickup neighborhoods</p>
+          </div>
+
+          <div class="zone-table-wrapper">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Zone</th>
+                  <th>Borough</th>
+                  <th>Pickups</th>
+                  <th>Avg Fare</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>Fordham</td>
+                  <td>Bronx</td>
+                  <td>52</td>
+                  <td>$37.70</td>
+                </tr>
+
+                <tr>
+                  <td>Midtown Center</td>
+                  <td>Manhattan</td>
+                  <td>49</td>
+                  <td>$39.76</td>
+                </tr>
+
+                <tr>
+                  <td>JFK Airport</td>
+                  <td>Queens</td>
+                  <td>46</td>
+                  <td>$39.17</td>
+                </tr>
+
+                <tr>
+                  <td>LaGuardia Airport</td>
+                  <td>Queens</td>
+                  <td>43</td>
+                  <td>$41.54</td>
+                </tr>
+
+                <tr>
+                  <td>Williamsburg</td>
+                  <td>Brooklyn</td>
+                  <td>40</td>
+                  <td>$38.38</td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           TRIP RECORDS TABLE
+      ========================================== -->
+      <section class="card records-section">
+
+        <!-- TABLE HEADER -->
+        <div class="records-header">
+
+          <div>
+            <h3>Trip Records</h3>
+            <p>Browse, search and sort recent taxi trips</p>
+          </div>
+
+          <!-- SEARCH BAR -->
+          <input
+            type="text"
+            placeholder="Search trips..."
+            id="searchInput"
+          >
+
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-wrapper">
+
+          <table id="recordsTable">
+
+            <thead>
+
+              <tr>
+                <th>Trip ID</th>
+                <th>Pickup Time</th>
+                <th>Dropoff Time</th>
+                <th>Pickup Borough</th>
+                <th>Dropoff Borough</th>
+                <th>Distance</th>
+                <th>Fare</th>
+                <th>PAX</th>
+                <th>Payment</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>T100280</td>
+                <td>Jun 15, 04:20 PM</td>
+                <td>Jun 15, 04:59 PM</td>
+                <td>Bronx</td>
+                <td>Manhattan</td>
+                <td>1.42 mi</td>
+                <td>$9.29</td>
+                <td>4</td>
+                <td>Unknown</td>
+              </tr>
+
+              <tr>
+                <td>T100349</td>
+                <td>Jun 15, 11:06 AM</td>
+                <td>Jun 15, 11:41 AM</td>
+                <td>Staten Island</td>
+                <td>Brooklyn</td>
+                <td>11.56 mi</td>
+                <td>$36.19</td>
+                <td>5</td>
+                <td>Credit Card</td>
+              </tr>
+
+              <tr>
+                <td>T100158</td>
+                <td>Jun 15, 03:55 AM</td>
+                <td>Jun 15, 04:37 AM</td>
+                <td>Staten Island</td>
+                <td>Manhattan</td>
+                <td>11.64 mi</td>
+                <td>$35.31</td>
+                <td>3</td>
+                <td>No Charge</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+
+          <button class="page-btn">← Prev</button>
+
+          <span>Page 1 / 48 · 480 trips</span>
+
+          <button class="page-btn">Next →</button>
+
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           INSIGHTS SECTION
+      ========================================== -->
+      <section class="insights-section">
+
+        <h3>Urban Mobility Insights</h3>
+
+        <div class="insight-grid">
+
+          <div class="card insight-card">
+            <i class="fa-solid fa-chart-line"></i>
+            <h4>Peak Demand Window</h4>
+            <p>
+              Most trips occurred around 01:00, making the busiest pickup hour.
+            </p>
+          </div>
+
+          <div class="card insight-card">
+            <i class="fa-solid fa-gem"></i>
+            <h4>Highest Revenue Borough</h4>
+            <p>
+              Staten Island leads fare revenue with $4179 generated.
+            </p>
+          </div>
+
+          <div class="card insight-card">
+            <i class="fa-solid fa-calendar"></i>
+            <h4>Weekend Behavior</h4>
+            <p>
+              Weekend trips average 11.5 miles indicating longer rides.
+            </p>
+          </div>
+
+          <div class="card insight-card">
+            <i class="fa-solid fa-credit-card"></i>
+            <h4>Cashless Adoption</h4>
+            <p>
+              Card and wallet payments dominate urban transportation.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- MAIN JAVASCRIPT -->
+  <script src="script.js"></script>
+
+</body>
+</html>
