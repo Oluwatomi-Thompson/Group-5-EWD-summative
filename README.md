@@ -2,7 +2,7 @@
 
 # Overview
 
-The **NYC Urban Mobility Dashboard** is a full-stack web application developed as part of the **Enterprise Web Development Summative Project**. The application provides interactive visualizations and insights into New York City taxi trip data using a responsive frontend, a Flask backend, and a SQLite database.
+The **NYC Urban Mobility Dashboard** is a full-stack web application developed for the **Enterprise Web Development Summative Project**. The application provides interactive visualizations and insights into New York City taxi trip data using a responsive frontend, a Flask backend, and a SQLite database.
 
 The project demonstrates the complete data pipeline—from raw dataset processing and storage to API development and frontend visualization.
 
@@ -184,6 +184,8 @@ Returns trip counts grouped by borough.
 ## Team Members
 
 * Oluwatomi Thompson
+* Joseph Oke
+* Nyayth Chol
 * Group 5 Members
 
 
