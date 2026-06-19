@@ -1,6 +1,10 @@
 import pandas as pd
 import json
 
+import os
+
+os.makedirs("data/processed", exist_ok=True)
+
 # Load the raw data files
 print("Loading files...")
 trips = pd.read_parquet("data/raw/yellow_tripdata.parquet")

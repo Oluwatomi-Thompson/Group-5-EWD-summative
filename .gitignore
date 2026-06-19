@@ -1,0 +1,12 @@
+# Database
+nyc-mobility-app/backend/*.db
+
+# Processed data
+nyc-mobility-app/data/processed/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
