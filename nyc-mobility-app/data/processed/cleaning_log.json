@@ -1,0 +1,10 @@
+{
+    "total_raw_records": 2964624,
+    "dropped_missing_location_ids": 0,
+    "dropped_invalid_distances": 60430,
+    "dropped_invalid_fares": 35837,
+    "dropped_zero_or_negative_durations": 5283,
+    "dropped_impossible_speeds": 246,
+    "final_clean_records": 2862828,
+    "total_records_excluded": 101796
+}
