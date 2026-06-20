@@ -4,9 +4,8 @@
 
 The **NYC Urban Mobility Dashboard** is a full-stack web application developed for the **Enterprise Web Development Summative Project**. The application provides interactive visualizations and insights into New York City taxi trip data using a responsive frontend, a Flask backend, and a SQLite database.
 
-The project demonstrates the complete data pipeline—from raw dataset processing and storage to API development and frontend visualization.
+The project demonstrates the complete data pipeline from raw dataset processing and storage to API development and frontend visualization.
 
----
 
 # Features
 
@@ -20,7 +19,6 @@ The project demonstrates the complete data pipeline—from raw dataset processin
 * Dynamic data fetching using JavaScript Fetch API
 * Mobile-friendly design
 
----
 
 # Technologies Used
 
@@ -45,8 +43,6 @@ The project demonstrates the complete data pipeline—from raw dataset processin
 
 * Pandas
 * NumPy
-
----
 
 # Project Structure
 
@@ -77,9 +73,7 @@ Group-5-EWD-summative/
 └── README.md
 ```
 
----
-
-## Dataset
+# Dataset
 
 This project uses the **NYC Yellow Taxi Trip Records** published by the New York City Taxi and Limousine Commission (TLC).
 
@@ -109,7 +103,6 @@ Navigate into the project directory:
 cd Group-5-EWD-summative
 ```
 
----
 
 # Install Dependencies
 
@@ -117,7 +110,6 @@ cd Group-5-EWD-summative
 pip install -r requirements.txt
 ```
 
----
 
 # Run the Backend
 
@@ -179,9 +171,8 @@ Returns trip counts grouped by borough.
 * Download reports as CSV/PDF
 * Additional dashboard analytics
 
----
 
-## Team Members
+# Team Members
 
 * Oluwatomi Thompson
 * Joseph Oke
