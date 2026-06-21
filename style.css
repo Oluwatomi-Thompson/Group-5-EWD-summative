@@ -8,12 +8,59 @@
   box-sizing:border-box;
 }
 
+/* ==========================================
+   BODY BACKGROUND IMAGE
+========================================== */
+
 body{
-  background:#07111f;
-  color:white;
-  font-family:Arial, sans-serif;
-  overflow-x:hidden;
+    font-family: Arial, sans-serif;
+    color: white;
+
+    background-image: url("background.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+
+    position: relative;
 }
+
+/* ==========================================
+   DARK OVERLAY
+========================================== */
+
+body::before{
+    content: "";
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(4, 10, 20, 0.72);
+
+    z-index: -1;
+}
+
+/* ==========================================
+   PAGE WRAPPER
+========================================== */
+
+.page-overlay{
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+}
+
 
 /* ==========================================
    TOPBAR
@@ -21,7 +68,7 @@ body{
 
 .topbar{
   height:70px;
-  background:#081426;
+  background: rgba(8,20,38,0.75);
   border-bottom:1px solid #163256;
 
   display:flex;
@@ -97,7 +144,7 @@ body{
   width:260px;
   min-height:100vh;
 
-  background:#091629;
+  background: rgba(9,22,41,0.75);
   border-right:1px solid #162b4b;
 
   padding:20px;
@@ -198,7 +245,7 @@ body{
 ========================================== */
 
 .card{
-  background:#0d1d35;
+  background: rgba(13,29,53,0.72);
   border:1px solid #183152;
 
   border-radius:16px;
@@ -208,11 +255,14 @@ body{
 }
 
 /* CARD HOVER */
-
 .card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 20px rgba(59,130,246,0.15);
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 10px 30px rgba(59,130,246,0.25),
+        0 0 20px rgba(59,130,246,0.15);
 }
+
 
 /* ==========================================
    STAT CARDS
@@ -258,16 +308,24 @@ body{
 /* PAYMENT CARD */
 
 .payment-card{
-  height:350px;
+    min-height:380px;
 }
 
 /* SMALLER PIE */
-
 .pie-container{
-  width:230px;
-  height:230px;
-  margin:auto;
+    width:230px;
+    height:230px;
+
+    margin:auto;
+
+    position:relative;
 }
+
+.payment-card canvas{
+    width:100% !important;
+    height:100% !important;
+}
+
 
 /* ZONE TABLE */
 
