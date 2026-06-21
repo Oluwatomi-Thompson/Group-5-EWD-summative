@@ -144,6 +144,10 @@ async function loadChart() {
       else unknown++;
     });
 
+  const canvas = document.getElementById("paymentChart");
+    console.log(canvas);
+
+    
     new Chart(
       document.getElementById("paymentChart"),
       {
