@@ -1,6 +1,6 @@
-
 # backend/database.py
-print("🔥 DATABASE.PY IS RUNNING SUCCESSFULLY")
+
+print("DATABASE.PY IS RUNNING SUCCESSFULLY")
 
 import pandas as pd
 import sqlite3
@@ -17,7 +17,9 @@ def get_connection():
     conn.execute("PRAGMA foreign_keys = ON;")
     return conn
 
+
 print("SCRIPT STARTED")
+
 
 # ----------------------------
 # CREATE TABLES
@@ -48,11 +50,9 @@ def create_tables():
         passenger_count INTEGER,
         pu_location_id INTEGER,
         do_location_id INTEGER,
-
         trip_duration_minutes REAL,
         average_speed REAL,
         cost_per_mile REAL,
-
         pickup_geometry_type TEXT,
         dropoff_geometry_type TEXT
     )
@@ -62,7 +62,9 @@ def create_tables():
     conn.close()
 
 
-
+# ----------------------------
+# LOAD SCHEMA (OPTIONAL)
+# ----------------------------
 def load_schema():
     conn = get_connection()
     cursor = conn.cursor()
@@ -76,12 +78,15 @@ def load_schema():
     conn.close()
     print("Schema created successfully")
 
+
 # ----------------------------
 # LOAD ZONES DATA
 # ----------------------------
 def load_zones():
     conn = get_connection()
     cursor = conn.cursor()
+
+    print("Loading zones data...")
 
     zones = pd.read_csv("../data/raw/taxi_zone_lookup.csv")
 
@@ -101,7 +106,7 @@ def load_zones():
     conn.commit()
     conn.close()
 
-    print("Zones inserted properly")
+    print("✅ Zones inserted properly")
 
 
 # ----------------------------
@@ -110,10 +115,20 @@ def load_zones():
 def load_trips():
     conn = get_connection()
 
-    # ALWAYS use cleaned data
+    print("Loading cleaned dataset...")
+
+    # Load cleaned data
     df = pd.read_parquet("../data/processed/cleaned_tripdata.parquet")
 
-    # Safety check (important for marks + avoids crashes)
+    # ----------------------------
+    # LIMIT DATA SIZE (CRITICAL FIX)
+    # ----------------------------
+    df = df.head(50000)
+    print(f"✅ Loaded {len(df)} rows")
+
+    # ----------------------------
+    # SAFETY CHECK
+    # ----------------------------
     required_cols = [
         "trip_duration_minutes",
         "average_speed",
@@ -127,7 +142,9 @@ def load_trips():
             print(f"⚠ Missing column added: {col}")
             df[col] = 0
 
-    # Clean column alignment (VERY IMPORTANT)
+    # ----------------------------
+    # RENAME COLUMNS
+    # ----------------------------
     df = df.rename(columns={
         "PULocationID": "pu_location_id",
         "DOLocationID": "do_location_id",
@@ -135,22 +152,47 @@ def load_trips():
         "tpep_dropoff_datetime": "dropoff_datetime"
     })
 
-    # Insert into database efficiently
-    df.to_sql("trips", conn, if_exists="replace", index=False)
+    # ----------------------------
+    # FIX DATETIME (PREVENT SLOW INSERT)
+    # ----------------------------
+    if "pickup_datetime" in df.columns:
+        df["pickup_datetime"] = df["pickup_datetime"].astype(str)
+
+    if "dropoff_datetime" in df.columns:
+        df["dropoff_datetime"] = df["dropoff_datetime"].astype(str)
+
+    # ----------------------------
+    # INSERT DATA (OPTIMIZED)
+    # ----------------------------
+    print("✅ Inserting trips into database...")
+
+    df.to_sql(
+        "trips",
+        conn,
+        if_exists="replace",
+        index=False,
+        chunksize=5000   # KEY FIX
+    )
 
     conn.close()
-    print("Trips inserted properly")
+    print("✅ Trips inserted successfully")
 
 
 # ----------------------------
 # RUN FULL PIPELINE
 # ----------------------------
 def run_pipeline():
+    print("🚀 Starting full pipeline...")
+
     create_tables()
     load_zones()
     load_trips()
-    print("Database setup complete")
+
+    print("✅ Database setup complete")
 
 
+# ----------------------------
+# MAIN
+# ----------------------------
 if __name__ == "__main__":
     run_pipeline()
