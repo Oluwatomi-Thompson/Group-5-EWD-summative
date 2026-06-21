@@ -72,29 +72,31 @@ themeToggle.addEventListener("click", () => {
 async function loadTrips() {
   try {
     const res = await fetch(`${API_BASE}/api/trips`);
-    const data = await res.json();
+    const trips = await res.json();
 
     const tbody = document.querySelector("#recordsTable tbody");
     tbody.innerHTML = "";
 
-    data.forEach(trip => {
-      tbody.innerHTML += `
-        <tr>
-          <td>${trip.trip_id}</td>
-          <td>${trip.pickup_datetime}</td>
-          <td>${trip.dropoff_datetime}</td>
-          <td>${trip.pu_location_id}</td>
-          <td>${trip.do_location_id}</td>
-          <td>${trip.trip_distance}</td>
-          <td>${trip.fare_amount}</td>
-          <td>${trip.passenger_count || 1}</td>
-          <td>Unknown</td>
-        </tr>
-      `;
-    });
+    trips.forEach(trip => {
 
+  console.log(trip);
+
+  tbody.innerHTML += `
+    <tr>
+      <td>${trip.trip_id ?? "N/A"}</td>
+      <td>${trip.pickup_datetime ?? "N/A"}</td>
+      <td>${trip.dropoff_datetime ?? "N/A"}</td>
+      <td>${trip.pu_location_id ?? "N/A"}</td>
+      <td>${trip.do_location_id ?? "N/A"}</td>
+      <td>${trip.trip_distance ?? 0}</td>
+      <td>${trip.fare_amount ?? 0}</td>
+      <td>${trip.passenger_count ?? 1}</td>
+      <td>${trip.payment_type ?? "Unknown"}</td>
+    </tr>
+  `;
+    });
   } catch (err) {
-    console.error("Failed to load trips:", err);
+    console.error("Trips error:", err);
   }
 }
 
@@ -104,15 +106,15 @@ async function loadTrips() {
 async function loadStats() {
   try {
     const res = await fetch(`${API_BASE}/api/trips`);
-    const data = await res.json();
+    const trips = await res.json();
 
-    const totalTrips = data.length;
+    const totalTrips = trips.length;
 
     const avgFare =
-      data.reduce((sum, t) => sum + (t.fare_amount || 0), 0) / totalTrips;
+      trips.reduce((sum, t) => sum + (t.fare_amount || 0), 0) / totalTrips;
 
     const avgDistance =
-      data.reduce((sum, t) => sum + (t.trip_distance || 0), 0) / totalTrips;
+      trips.reduce((sum, t) => sum + (t.trip_distance || 0), 0) / totalTrips;
 
     const cards = document.querySelectorAll(".stat-card h2");
 
@@ -126,49 +128,51 @@ async function loadStats() {
 }
 
 /* ==========================================
-   PAYMENT CHART (NOW FROM BACKEND DATA)
+   PAYMENT CHART (SAFE VERSION)
 ========================================== */
+let chartInstance = null;
+
 async function loadChart() {
   try {
     const res = await fetch(`${API_BASE}/api/trips`);
     const data = await res.json();
 
-    let credit = 0, cash = 0, noCharge = 0, unknown = 0;
+    let cash = 0, card = 0, mobile = 0;
 
-    data.forEach(t => {
-      const p = t.payment_type;
+   data.forEach(t => {
+  const method = (t.payment_method || "").toLowerCase();
 
-      if (p === "Credit Card") credit++;
-      else if (p === "Cash") cash++;
-      else if (p === "No Charge") noCharge++;
-      else unknown++;
-    });
+  if (method === "cash") cash++;
+  else if (method === "card") card++;
+  else mobile++;
+});
 
-  const canvas = document.getElementById("paymentChart");
-    console.log(canvas);
+    const canvas = document.getElementById("paymentChart");
+    if (!canvas) return;
 
-    
-    new Chart(
-      document.getElementById("paymentChart"),
-      {
-        type: "doughnut",
-        data: {
-          labels: ["Credit Card", "Cash", "No Charge", "Unknown"],
-          datasets: [{
-            data: [credit, cash, noCharge, unknown],
-            backgroundColor: ["#3b82f6", "#36c2db", "#f8a900", "#f44343"]
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: "50%",
-          plugins: {
-            legend: { position: "bottom" }
-          }
+    // destroy old chart if exists
+    if (chartInstance) {
+  chartInstance.destroy();
+}
+
+    window.chartInstance = new Chart(canvas, {
+      type: "doughnut",
+      data: {
+        labels: ["Cash", "Card", "Mobile Money"],
+datasets: [{
+  data: [cash, card, mobile],
+  backgroundColor: ["#3b82f6", "#36c2db", "#f8a900"]
+}]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "50%",
+        plugins: {
+          legend: { position: "bottom" }
         }
       }
-    );
+    });
 
   } catch (err) {
     console.error("Chart error:", err);
@@ -178,6 +182,8 @@ async function loadChart() {
 /* ==========================================
    INIT APP
 ========================================== */
-loadTrips();
-loadStats();
-loadChart();
+document.addEventListener("DOMContentLoaded", () => {
+  loadTrips();
+  loadStats();
+  loadChart();
+});
