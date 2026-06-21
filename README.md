@@ -1,54 +1,49 @@
-# NYC Urban Mobility Dashboard
+# NYC Urban Mobility Dashboard 
 
 # Overview
 
-The **NYC Urban Mobility Dashboard** is a full-stack web application developed for the **Enterprise Web Development Summative Project**. The application provides interactive visualizations and insights into New York City taxi trip data using a responsive frontend, a Flask backend, and a SQLite database.
+The NYC Urban Mobility Dashboard is a full-stack data analytics application developed for the Enterprise Web Development Summative Project. It processes real-world NYC Taxi Trip data and presents meaningful insights through an interactive dashboard.
 
-The project demonstrates the complete data pipeline from raw dataset processing and storage to API development and frontend visualization.
+The system demonstrates a complete data pipeline — from raw dataset ingestion and cleaning to database storage, API development, and frontend visualization.
+
+
+# Objectives
+
+* Clean and preprocess raw NYC taxi data
+* Store structured data in a relational database
+* Build a backend API for data access
+* Create an interactive dashboard for data exploration
+* Generate meaningful insights from urban mobility data
 
 
 # Features
 
 * Responsive user interface
-* Interactive dashboard
-* Charts powered by Chart.js
-* Flask REST API
-* SQLite database integration
-* Processed NYC Taxi dataset
-* Summary statistics
-* Dynamic data fetching using JavaScript Fetch API
-* Mobile-friendly design
+* Interactive dashboard with real-time data
+* Data visualization using Chart.js
+* Flask REST API integration
+* SQLite database storage
+* Data cleaning and preprocessing pipeline
+* Summary statistics (trips, fare, distance)
+* Dynamic data fetching using Fetch API
 
 
-# Technologies Used
 
-# Frontend
+# System Architecture
 
-* HTML5
-* CSS3
-* JavaScript (ES6)
-* Chart.js
+# Components:
 
-# Backend
+* **Data Processing Layer** → `clean_data.py`
+* **Pipeline Execution** → `pipeline.py`
+* **Database Layer** → SQLite (`nyc_taxi.db`)
+* **Backend API** → Flask (`app.py`)
+* **Frontend Dashboard** → HTML, CSS, JavaScript
 
-* Python
-* Flask
-* Flask-CORS
-
-# Database
-
-* SQLite
-
-# Data Processing
-
-* Pandas
-* NumPy
 
 # Project Structure
 
-```
+```bash
 Group-5-EWD-summative/
-
 │
 ├── backend/
 │   ├── app.py
@@ -67,7 +62,10 @@ Group-5-EWD-summative/
 │   └── processed/
 │
 ├── scripts/
-│   └── clean_data.py
+│   ├── clean_data.py
+│   ├── pipeline.py
+│   ├── database.py
+│   └── dsa_ranking.py
 │
 ├── .gitignore
 └── README.md
@@ -75,101 +73,213 @@ Group-5-EWD-summative/
 
 # Dataset
 
-This project uses the **NYC Yellow Taxi Trip Records** published by the New York City Taxi and Limousine Commission (TLC).
+This project uses the NYC Yellow Taxi Trip dataset from the New York City Taxi and Limousine Commission (TLC).
 
-The dataset contains information including:
+# Data includes:
 
-* Pickup locations
-* Drop-off locations
-* Trip distance
-* Fare amount
+* Pickup and drop-off locations
+* Trip distance and duration
+* Fare and total cost
 * Passenger count
-* Payment type
-* Trip duration
+* Payment method
 
-The raw data is cleaned and processed before being stored in a SQLite database for efficient querying.
 
-## Installation
 
-### Clone the repository
+# Data Processing & Cleaning
+
+Data is cleaned using `clean_data.py`:
+
+# Cleaning Steps:
+
+* Removed missing location IDs
+* Filtered invalid distances and fares
+* Removed unrealistic speeds (> 80 mph)
+* Converted timestamps to proper datetime format
+* Removed extremely short or invalid trips
+
+# Feature Engineering:
+
+* Trip Duration (minutes)
+* Average Speed (mph)
+* Cost per Mile
+
+
+# Database Design
+
+SQLite database (`nyc_taxi.db`) stores processed data.
+
+# Table: `trips`
+
+| Column           | Description            |
+| ---------------- | ---------------------- |
+| trip_id          | Unique trip identifier |
+| pickup_datetime  | Trip start time        |
+| dropoff_datetime | Trip end time          |
+| trip_distance    | Distance (miles)       |
+| fare_amount      | Fare cost              |
+| passenger_count  | Number of passengers   |
+| payment_type     | Payment method         |
+| pu_location_id   | Pickup location        |
+| do_location_id   | Dropoff location       |
+
+---
+
+# Setup Instructions
+
+# 1. Clone Repository
 
 ```bash
 git clone https://github.com/Oluwatomi-Thompson/Group-5-EWD-summative.git
-```
-
-Navigate into the project directory:
-
-```bash
 cd Group-5-EWD-summative
 ```
 
+---
 
-# Install Dependencies
+# 2. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 ```
 
+---
 
-# Run the Backend
+# 3. Run Data Pipeline
+
+```bash
+python scripts/pipeline.py
+```
+
+This step:
+
+* Cleans raw dataset
+* Generates processed data
+* Populates the database
+
+---
+
+### 4. Start Backend Server
 
 ```bash
 cd backend
 python app.py
 ```
 
-The Flask server will start on:
+Server runs at:
 
 ```
 http://127.0.0.1:5000
 ```
 
-# Run the Frontend
+---
 
-Open the frontend folder using **Live Server** in Visual Studio Code or serve it with any local web server.
+# 5. Run Frontend
 
-
-API Endpoints
-
-# GET /api/summary
-
-Returns key dashboard statistics, including:
-
-* Total Trips
-* Average Fare
-* Average Distance
+Open the frontend using Live Server or open `index.html` in your browser.
 
 
-# GET /api/payment-types
 
-Returns payment method distribution used to generate the pie chart.
+#  API Endpoints
 
-# GET /api/monthly-trips
+# GET `/api/trips`
 
-Returns monthly trip totals used for the line chart.
-
-# GET /api/borough-trips
-
-Returns trip counts grouped by borough.
+Returns trip records used in the dashboard and chart
 
 
-#Screenshots
+# Dashboard Features
 
-# Homepage
+* Trip records table
+* Search and filtering functionality
+* Summary statistics:
+
+  * Total Trips
+  * Average Fare
+  * Average Distance
+* Payment method distribution chart
 
 
-# Dashboard
+# Visualizations
 
+# Payment Distribution Chart
+
+Shows distribution of:
+
+* Cash
+* Card
+* Other payment types
+
+---
+
+# Algorithmic Component
+
+Custom algorithm implemented in:
+
+```
+scripts/dsa_ranking.py
+```
+
+Used for:
+
+* Ranking or sorting trip data
+* Demonstrating algorithm design without built-in shortcuts
+
+---
+
+## 🔍 Insights
+
+# 1. The majority of trips are short-distance
+
+Indicates high-density urban movement patterns.
+
+# 2. Cash payments remain significant
+
+Despite digital payment growth, cash is still widely used.
+
+# 3. Cost efficiency varies significantly
+
+Trips with shorter durations tend to have higher cost per mile.
+
+
+# Challenges Faced
+
+* Handling missing and inconsistent data
+* Mapping numeric payment types to readable values
+* Debugging frontend-backend connection issues
+* Ensuring smooth data flow across the pipeline
 
 
 # Future Improvements
 
-* User authentication
-* Real-time taxi data
-* Interactive maps
-* Advanced filtering
-* Download reports as CSV/PDF
-* Additional dashboard analytics
+* Add geospatial visualization (maps)
+* Implement advanced filters (time, borough)
+* Deploy the application online
+* Improve UI/UX design
+
+
+## 📸 Screenshots
+
+### 1. Dashboard Overview
+
+<img width="1826" height="904" alt="Screenshot 2026-06-21 152528" src="https://github.com/user-attachments/assets/f909f943-9d2d-43e7-b399-2ce883864ee7" />
+
+
+# 2. Payment Chart
+
+<img width="706" height="443" alt="Screenshot 2026-06-21 152450" src="https://github.com/user-attachments/assets/6288175b-484b-4df7-9aa5-9514b08702a3" />
+
+
+# 3. API Response
+
+<img width="1044" height="610" alt="Screenshot 2026-06-21 152431" src="https://github.com/user-attachments/assets/8e509df7-b673-4960-a64c-21042499a3cb" />
+
+
+### 4. Database View
+
+<img width="665" height="270" alt="Screenshot 2026-06-21 153449" src="https://github.com/user-attachments/assets/b998c51d-2b45-45c9-adf1-d12ad71dbc80" />
+
+
+# Video Walkthrough
+
+video link here
 
 
 # Team Members
@@ -177,7 +287,6 @@ Returns trip counts grouped by borough.
 * Oluwatomi Thompson
 * Joseph Oke
 * Nyayth Chol
-* Group 5 Members
 
 
 # License
@@ -187,7 +296,7 @@ This project was developed for academic purposes as part of the Enterprise Web D
 
 # Acknowledgements
 
-* New York City Taxi and Limousine Commission (TLC)
+* NYC Taxi & Limousine Commission (TLC)
 * Flask Documentation
 * Chart.js Documentation
 * Enterprise Web Development Course
