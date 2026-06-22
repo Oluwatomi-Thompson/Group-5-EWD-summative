@@ -1,11 +1,11 @@
-/* ==========================================
+/* ............................
    API BASE
-========================================== */
+   .......................... */
 const API_BASE = "http://127.0.0.1:5000";
 
-/* ==========================================
+/* ............................
    BUTTONS (UNCHANGED)
-========================================== */
+  ............................ */
 document.getElementById("applyBtn")?.addEventListener("click", () => {
   const btn = document.getElementById("applyBtn");
 
@@ -24,9 +24,9 @@ document.getElementById("resetBtn")?.addEventListener("click", () => {
   location.reload();
 });
 
-/* ==========================================
+/* .............................
    SEARCH TABLE
-========================================== */
+.............................. */
 document.getElementById("searchInput")?.addEventListener("keyup", () => {
   const filter = document.getElementById("searchInput").value.toLowerCase();
 
@@ -38,23 +38,23 @@ document.getElementById("searchInput")?.addEventListener("keyup", () => {
   });
 });
 
-/* ==========================================
+/* .............................
    SCROLL TOP
-========================================== */
+.............................. */
 document.getElementById("scrollTopBtn")?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-/* ==========================================
+/* .............................
    DARK MODE
-========================================== */
+.............................. */
 document.getElementById("themeToggle")?.addEventListener("click", () => {
   document.body.classList.toggle("light-mode");
 });
 
-/* ==========================================
+/* .............................
    LOAD TRIPS
-========================================== */
+.............................. */
 async function loadTrips() {
   try {
     const res = await fetch(`${API_BASE}/api/trips`);
@@ -89,9 +89,9 @@ async function loadTrips() {
   }
 }
 
-/* ==========================================
+/* .............................
    LOAD STATS
-========================================== */
+.............................. */
 async function loadStats() {
   try {
     const res = await fetch(`${API_BASE}/api/trips`);
@@ -189,9 +189,9 @@ async function loadPaymentChart() {
   }
 }
 
-/* ==========================================
+/* .............................
    INIT
-========================================== */
+.............................. */
 document.addEventListener("DOMContentLoaded", () => {
   loadTrips();
   loadStats();
