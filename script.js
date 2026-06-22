@@ -125,12 +125,9 @@ async function loadStats() {
   }
 }
 
-/* ==========================================
-   PAYMENT CHART (FIXED)
-========================================== */
 let chartInstance = null;
 
-async function loadChart() {
+async function loadPaymentChart() {
   try {
     const res = await fetch(`${API_BASE}/api/trips`);
 
@@ -138,24 +135,27 @@ async function loadChart() {
 
     const trips = await res.json();
 
-    let cash = 0, card = 0, mobile = 0;
+    let cash = 0;
+    let card = 0;
+    let mobile = 0;
 
     const paymentMap = {
-  1: "card",
-  2: "cash",
-  3: "no_charge",
-  4: "dispute",
-  5: "unknown",
-  6: "voided"
-};
+      cash: "cash",
+      card: "card",
+      mobile: "mobile",
+      "mobile money": "mobile",
+      mtn: "mobile",
+      airtel: "mobile",
+      vodafone: "mobile"
+    };
 
-trips.forEach((t) => {
-  const method = paymentMap[t.payment_type] || "unknown";
+    trips.forEach((t) => {
+      const method = paymentMap[String(t.payment_type || "").toLowerCase()] || "unknown";
 
-  if (method === "cash") cash++;
-  else if (method === "card") card++;
-  else mobile++;
-});
+      if (method === "cash") cash++;
+      else if (method === "card") card++;
+      else mobile++;
+    });
 
     const canvas = document.getElementById("paymentChart");
     if (!canvas) return;
@@ -184,7 +184,6 @@ trips.forEach((t) => {
         }
       }
     });
-
   } catch (err) {
     console.error("Chart error:", err);
   }
@@ -196,5 +195,5 @@ trips.forEach((t) => {
 document.addEventListener("DOMContentLoaded", () => {
   loadTrips();
   loadStats();
-  loadChart();
+  loadPaymentChart();
 });

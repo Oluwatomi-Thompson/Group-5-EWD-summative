@@ -106,7 +106,7 @@ def load_zones():
     conn.commit()
     conn.close()
 
-    print("✅ Zones inserted properly")
+    print(" Zones inserted properly")
 
 
 # ----------------------------
@@ -118,13 +118,13 @@ def load_trips():
     print("Loading cleaned dataset...")
 
     # Load cleaned data
-    df = pd.read_parquet("../data/processed/cleaned_tripdata.parquet")
+    df = pd.read_parquet("../data/raw/yellow_tripdata.parquet")
 
     # ----------------------------
     # LIMIT DATA SIZE (CRITICAL FIX)
     # ----------------------------
     df = df.head(50000)
-    print(f"✅ Loaded {len(df)} rows")
+    print(f" Loaded {len(df)} rows")
 
     # ----------------------------
     # SAFETY CHECK
@@ -164,7 +164,7 @@ def load_trips():
     # ----------------------------
     # INSERT DATA (OPTIMIZED)
     # ----------------------------
-    print("✅ Inserting trips into database...")
+    print(" Inserting trips into database...")
 
     df.to_sql(
         "trips",
@@ -175,20 +175,20 @@ def load_trips():
     )
 
     conn.close()
-    print("✅ Trips inserted successfully")
+    print(" Trips inserted successfully")
 
 
 # ----------------------------
 # RUN FULL PIPELINE
 # ----------------------------
 def run_pipeline():
-    print("🚀 Starting full pipeline...")
+    print(" Starting full pipeline...")
 
     create_tables()
     load_zones()
     load_trips()
 
-    print("✅ Database setup complete")
+    print(" Database setup complete")
 
 
 # ----------------------------
