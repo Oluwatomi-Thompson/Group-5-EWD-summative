@@ -1,5 +1,11 @@
 # NYC Urban Mobility Dashboard 
 
+
+# Video Walkthrough
+Access the video walkthrough for detailed instructions here:
+https://youtu.be/EABbpghFh-0
+
+
 # Overview
 
 The NYC Urban Mobility Dashboard is a full-stack data analytics application developed for the Enterprise Web Development Summative Project. It processes real-world NYC Taxi Trip data and presents meaningful insights through an interactive dashboard.
@@ -276,10 +282,6 @@ Trips with shorter durations tend to have higher cost per mile.
 
 <img width="665" height="270" alt="Screenshot 2026-06-21 153449" src="https://github.com/user-attachments/assets/b998c51d-2b45-45c9-adf1-d12ad71dbc80" />
 
-
-# Video Walkthrough
-
-video link here
 
 
 # Team Members
