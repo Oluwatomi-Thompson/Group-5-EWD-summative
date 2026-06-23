@@ -36,6 +36,57 @@ The system demonstrates a complete data pipeline — from raw dataset ingestion 
 
 
 # System Architecture
+Architecture Diagram
++----------------------+
+|
+Frontend UI
+|
+| HTML/ CSS/JS |
+|
+v
++----------------------+
+|
+app.py
+|
+(Flask API)
+|
+|
+|
+v
++----------------------+
+|
+database.py
+| (Logic Layer)
+|
+|
+|
+v
+|
+v
++----------------------+
+|
+models.py
+| (Data Structure)
+|
+|
++----------------------+
+|
+v
++----------------------+
+|
+schema.sql
+| (DB Structure)
+|
+|
++----------------------+
+|
+v
+| nyc_taxi.db
+|
+|
+| (SQLite Database)
++----------------------+
+The system follows a 3-layer architecture
 
 # Components:
 
