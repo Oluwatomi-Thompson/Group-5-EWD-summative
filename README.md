@@ -5,6 +5,9 @@
 Access the video walkthrough for detailed instructions here:
 https://youtu.be/EABbpghFh-0
 
+The link to the Team Task Sheet 
+https://docs.google.com/spreadsheets/d/1D9h9SrIzgpH0Oj_G0itc7oj793BDZaJuE-IJlGwR_As/edit?usp=sharing
+
 
 # Overview
 
