@@ -34,11 +34,6 @@ The system demonstrates a complete data pipeline — from raw dataset ingestion 
 * Dynamic data fetching using Fetch API
 
 
-
-# System Architecture
-
-The system follows a 3-layer architecture
-
 # Components:
 
 * **Data Processing Layer** → `clean_data.py`
